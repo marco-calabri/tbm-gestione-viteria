@@ -4,16 +4,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
-  { hasError: boolean; error: Error | null }
-> {
-  constructor(props: { children: React.ReactNode }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
@@ -30,7 +36,6 @@ class ErrorBoundary extends React.Component<
           alignItems: 'center',
           justifyContent: 'center',
           background: '#f8fafc',
-          fontFamily: 'Inter, sans-serif',
           padding: '2rem'
         }}>
           <div style={{
@@ -43,7 +48,7 @@ class ErrorBoundary extends React.Component<
             boxShadow: '0 4px 6px -1px rgba(0,0,0,.1)'
           }}>
             <h1 style={{ color: '#dc2626', marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 700 }}>
-              ⚠️ Errore di avvio applicazione
+              ⚠️ Errore di avvio
             </h1>
             <pre style={{
               background: '#fef2f2',
@@ -52,12 +57,9 @@ class ErrorBoundary extends React.Component<
               fontSize: '0.75rem',
               overflow: 'auto',
               color: '#991b1b',
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word'
+              whiteSpace: 'pre-wrap'
             }}>
               {this.state.error?.message}
-              {'\n\n'}
-              {this.state.error?.stack}
             </pre>
           </div>
         </div>
@@ -68,15 +70,13 @@ class ErrorBoundary extends React.Component<
 }
 
 const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </React.StrictMode>
+  );
 }
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </React.StrictMode>
-);
