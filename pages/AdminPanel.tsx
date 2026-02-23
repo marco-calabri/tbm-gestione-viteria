@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
-import * as XLSX from 'xlsx';
+import * as React from 'react';
+import { useState } from 'react';
+import * as XLSX from 'xlsx-js-style';
 import {
   Upload, Database, FileSpreadsheet, AlertCircle,
   CheckCircle2, Settings2, Info, DownloadCloud, FileQuestion

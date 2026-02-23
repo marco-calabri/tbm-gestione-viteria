@@ -1,7 +1,7 @@
-
-import React, { useState, useMemo, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx-js-style';
 import { ConfigCategory, Product, ConfigOption } from '../types';
 import {
   Calculator, Save, ChevronRight, Info,
@@ -210,7 +210,7 @@ export const Configurator: React.FC = () => {
 
   const exportExcel = () => {
     // Gestione robusta dell'importazione esm.sh
-    const XLSXLib = (XLSX as any).utils ? XLSX : (XLSX as any).default;
+    const XLSXLib = XLSX as any;
     if (!XLSXLib || !XLSXLib.utils) {
       alert("Libreria Excel non inizializzata correttamente. Riprova.");
       return;
@@ -334,8 +334,8 @@ export const Configurator: React.FC = () => {
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(opt => (
                   <div key={opt.id} className={`p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 group ${opt.multiplier === 0
-                      ? 'bg-slate-50/50 border-slate-100 grayscale opacity-60'
-                      : 'border-slate-100 hover:border-blue-200 hover:bg-blue-50/20'
+                    ? 'bg-slate-50/50 border-slate-100 grayscale opacity-60'
+                    : 'border-slate-100 hover:border-blue-200 hover:bg-blue-50/20'
                     }`}>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
@@ -363,8 +363,8 @@ export const Configurator: React.FC = () => {
                         placeholder="0"
                         disabled={opt.multiplier === 0}
                         className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${opt.multiplier === 0
-                            ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50'
-                            : 'border-slate-200 focus:border-blue-500 bg-white'
+                          ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50'
+                          : 'border-slate-200 focus:border-blue-500 bg-white'
                           }`}
                         value={selections[opt.id] || ''}
                         onChange={e => handleInputChange(opt.id, e.target.value)}
