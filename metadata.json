@@ -1,0 +1,7 @@
+{
+  "name": "TBM Gestione Viteria 01",
+  "description": "Applicazione professionale per la gestione e il calcolo automatico della viteria per assemblaggio meccanico, con supporto importazione Excel e sincronizzazione Firebase.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
