@@ -1,0 +1,302 @@
+[
+    {
+        "altezza": 3500,
+        "tipo": "Centina Intera",
+        "val": 48
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Centina Spezzata",
+        "val": 48
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Centina Laterale con Porta",
+        "val": 96
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Centina Laterale Standard",
+        "val": 82
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Centina Intera",
+        "val": 48
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Centina Spezzata",
+        "val": 48
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Centina Laterale con Porta",
+        "val": 96
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Centina Laterale Standard",
+        "val": 82
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Centina Intera",
+        "val": 44
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Centina Spezzata",
+        "val": 44
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Centina Laterale con Porta",
+        "val": 88
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Centina Laterale Standard",
+        "val": 74
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Centina Intera",
+        "val": 44
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Centina Spezzata",
+        "val": 44
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Centina Laterale con Porta",
+        "val": 88
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Centina Laterale Standard",
+        "val": 74
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Centina Intera",
+        "val": 44
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Centina Spezzata",
+        "val": 44
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Centina Laterale con Porta",
+        "val": 88
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Centina Laterale Standard",
+        "val": 74
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Centina Intera",
+        "val": 44
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Centina Spezzata",
+        "val": 44
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Centina Laterale con Porta",
+        "val": 88
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Centina Laterale Standard",
+        "val": 72
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Centina Intera",
+        "val": 40
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Centina Spezzata",
+        "val": 40
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Centina Laterale con Porta",
+        "val": 80
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Centina Laterale Standard",
+        "val": 66
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Centina Intera",
+        "val": 40
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Centina Spezzata",
+        "val": 40
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Centina Laterale con Porta",
+        "val": 80
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Centina Laterale Standard",
+        "val": 66
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Centina Intera",
+        "val": 40
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Centina Spezzata",
+        "val": 40
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Centina Laterale con Porta",
+        "val": 80
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Centina Laterale Standard",
+        "val": 66
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Centina Intera",
+        "val": 36
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Centina Spezzata",
+        "val": 36
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Centina Laterale con Porta",
+        "val": 72
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Centina Laterale Standard",
+        "val": 40
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Centina Intera",
+        "val": 36
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Centina Spezzata",
+        "val": 36
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Centina Laterale con Porta",
+        "val": 72
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Centina Laterale Standard",
+        "val": 40
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Centina Intera",
+        "val": 36
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Centina Spezzata",
+        "val": 36
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Centina Laterale con Porta",
+        "val": 72
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Centina Laterale Standard",
+        "val": 40
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Centina Intera",
+        "val": 32
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Centina Spezzata",
+        "val": 32
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Centina Laterale con Porta",
+        "val": 64
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Centina Laterale Standard",
+        "val": 32
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Centina Intera",
+        "val": 32
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Centina Spezzata",
+        "val": 32
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Centina Laterale con Porta",
+        "val": 64
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Centina Laterale Standard",
+        "val": 32
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Centina Intera",
+        "val": 32
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Centina Spezzata",
+        "val": 32
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Centina Laterale con Porta",
+        "val": 64
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Centina Laterale Standard",
+        "val": 32
+    }
+]

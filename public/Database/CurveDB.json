@@ -1,0 +1,452 @@
+[
+    {
+        "altezza": 3500,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 175
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 245
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 35
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 170
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 238
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 34
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 165
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 231
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 33
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 160
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 224
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 32
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 155
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 217
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 31
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 150
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 210
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 30
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 145
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 203
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 29
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 140
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 4
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 196
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 8
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 28
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 135
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 189
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 27
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 130
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 182
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 26
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 125
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 175
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 25
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 120
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 168
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 24
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 115
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 161
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 23
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 110
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 154
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 22
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700197",
+        "val": 105
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Curva 90° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700197",
+        "val": 147
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Curva 180° (Piastre)",
+        "codice": "BA502856",
+        "val": 0
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Pannelli 10 mm",
+        "codice": "BA700307",
+        "val": 21
+    }
+]
