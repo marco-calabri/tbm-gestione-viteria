@@ -19,6 +19,7 @@ export const Dashboard: React.FC = () => {
     { name: 'BA700289', qty: 850 },
     { name: 'BA502856', qty: 450 },
     { name: 'BA700307', qty: 600 },
+    { name: 'BA700275', qty: 600 },
   ];
 
   const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
@@ -54,7 +55,7 @@ export const Dashboard: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} />
                   <YAxis axisLine={false} tickLine={false} />
-                  <Tooltip 
+                  <Tooltip
                     cursor={{ fill: '#f1f5f9' }}
                     contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                   />
@@ -72,8 +73,8 @@ export const Dashboard: React.FC = () => {
             <div className="relative z-10">
               <h2 className="text-2xl font-bold mb-2">Pronto per un nuovo calcolo?</h2>
               <p className="text-blue-100 mb-6 max-w-md">Utilizza il configuratore avanzato per determinare esattamente la quantità di viteria necessaria in base alle specifiche di progetto.</p>
-              <Link 
-                to="/configurator" 
+              <Link
+                to="/configurator"
                 className="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-all shadow-md group"
               >
                 Inizia Configurazione

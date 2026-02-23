@@ -3,9 +3,9 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import { ConfigCategory, Product, ConfigOption } from '../types';
-import { 
-  Calculator, Save, ChevronRight, Info, 
-  FileSpreadsheet, Layers, Ruler, Box, Package, CornerUpRight, 
+import {
+  Calculator, Save, ChevronRight, Info,
+  FileSpreadsheet, Layers, Ruler, Box, Package, CornerUpRight,
   Table as TableIcon, Download, FileJson
 } from 'lucide-react';
 
@@ -14,9 +14,10 @@ const INITIAL_PRODUCTS: Product[] = [
   { id: 'BA700289', description: 'RIVETTO A STRAPPO 3,2x10 ENISO15977 AL/ZN', unit: 'pezzi' },
   { id: 'BA502856', description: "PIASTRA D'ASSEMBLAGGIO RETTANGOLARE ZN 70x35", unit: 'pezzi' },
   { id: 'BA700307', description: 'VITE AUTOFILETTANTE PER LEGNO 3x10 TESTA BOMBATA TCB RW 10 A2K 3x10/8.5', unit: 'pezzi' },
+  { id: 'BA700275', description: 'VITE TRILOBATA M6x30 TESTA SVASATA INSERTO TORX DIN7500 ZN', unit: 'pezzi' },
 ];
 
-const MAIN_CODES = ['BA700197', 'BA700289', 'BA502856', 'BA700307'];
+const MAIN_CODES = ['BA700197', 'BA700289', 'BA502856', 'BA700307', 'BA700275'];
 
 const INITIAL_CONFIGS: ConfigCategory[] = [
   { id: 'altezze', categoryName: 'Altezze', isHeightCategorized: true, options: [] },
@@ -57,7 +58,7 @@ export const Configurator: React.FC = () => {
           resAltezze.json(), resModuli.json(), resVarie.json(), resCurve.json()
         ]);
 
-        const mapData = (data: any[], catId: string, defaultCode?: string) => 
+        const mapData = (data: any[], catId: string, defaultCode?: string) =>
           data.map((item: any, idx: number) => ({
             id: `${catId}_${idx}`,
             altezza: item.altezza,
@@ -87,7 +88,7 @@ export const Configurator: React.FC = () => {
     const newSelections: Record<string, number> = {};
     const altezzeCat = configs.find(c => c.id === 'altezze');
     const moduliCat = configs.find(c => c.id === 'moduli');
-    
+
     if (altezzeCat) {
       altezzeCat.options.forEach(opt => {
         if (opt.altezza?.toString() === selectedHeight) {
@@ -177,7 +178,7 @@ export const Configurator: React.FC = () => {
   const handleInputChange = (optionId: string, value: string) => {
     const num = parseInt(value);
     const val = isNaN(num) ? 0 : Math.max(0, num);
-    
+
     setSelections(prev => {
       const next = { ...prev, [optionId]: val };
       const changedOpt = configs.flatMap(c => c.options).find(o => o.id === optionId);
@@ -288,24 +289,24 @@ export const Configurator: React.FC = () => {
             <h1 className="text-2xl font-black text-slate-800 tracking-tight">Elaborazione Progetto</h1>
           </div>
           <div className="flex flex-wrap gap-4 items-center">
-             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-               <Ruler size={18} className="text-blue-500" />
-               <span className="text-xs font-bold text-slate-400 uppercase">Altezza Progetto:</span>
-               <select 
-                 className="font-bold text-blue-600 outline-none cursor-pointer bg-transparent"
-                 value={selectedHeight}
-                 onChange={e => setSelectedHeight(e.target.value)}
-               >
-                 {availableHeights.map(h => <option key={h} value={h}>{h} mm</option>)}
-               </select>
-             </div>
-             <input 
-                type="text" 
-                placeholder="Nome Commessa / Cantiere..."
-                className="px-4 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none font-medium min-w-[250px] shadow-sm"
-                value={label}
-                onChange={e => setLabel(e.target.value)}
-              />
+            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+              <Ruler size={18} className="text-blue-500" />
+              <span className="text-xs font-bold text-slate-400 uppercase">Altezza Progetto:</span>
+              <select
+                className="font-bold text-blue-600 outline-none cursor-pointer bg-transparent"
+                value={selectedHeight}
+                onChange={e => setSelectedHeight(e.target.value)}
+              >
+                {availableHeights.map(h => <option key={h} value={h}>{h} mm</option>)}
+              </select>
+            </div>
+            <input
+              type="text"
+              placeholder="Nome Commessa / Cantiere..."
+              className="px-4 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none font-medium min-w-[250px] shadow-sm"
+              value={label}
+              onChange={e => setLabel(e.target.value)}
+            />
           </div>
         </div>
 
@@ -316,9 +317,8 @@ export const Configurator: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all ${
-                  activeCategory === cat.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-500 hover:bg-white hover:shadow-sm'
-                }`}
+                className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all ${activeCategory === cat.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-500 hover:bg-white hover:shadow-sm'
+                  }`}
               >
                 {cat.id === 'altezze' && <Ruler size={18} />}
                 {cat.id === 'moduli' && <Box size={18} />}
@@ -333,11 +333,10 @@ export const Configurator: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(opt => (
-                  <div key={opt.id} className={`p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 group ${
-                    opt.multiplier === 0 
-                    ? 'bg-slate-50/50 border-slate-100 grayscale opacity-60' 
-                    : 'border-slate-100 hover:border-blue-200 hover:bg-blue-50/20'
-                  }`}>
+                  <div key={opt.id} className={`p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 group ${opt.multiplier === 0
+                      ? 'bg-slate-50/50 border-slate-100 grayscale opacity-60'
+                      : 'border-slate-100 hover:border-blue-200 hover:bg-blue-50/20'
+                    }`}>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <h4 className={`font-bold transition-colors ${opt.multiplier === 0 ? 'text-slate-400' : 'text-slate-800 group-hover:text-blue-700'}`}>
@@ -358,16 +357,15 @@ export const Configurator: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <p className={`text-[10px] font-bold uppercase mb-1 ${opt.multiplier === 0 ? 'text-slate-300' : 'text-slate-400'}`}>Pezzi</p>
-                      <input 
+                      <input
                         type="number"
                         min="0"
                         placeholder="0"
                         disabled={opt.multiplier === 0}
-                        className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${
-                          opt.multiplier === 0 
-                          ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50' 
-                          : 'border-slate-200 focus:border-blue-500 bg-white'
-                        }`}
+                        className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${opt.multiplier === 0
+                            ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50'
+                            : 'border-slate-200 focus:border-blue-500 bg-white'
+                          }`}
                         value={selections[opt.id] || ''}
                         onChange={e => handleInputChange(opt.id, e.target.value)}
                       />
@@ -452,7 +450,7 @@ export const Configurator: React.FC = () => {
                 <FileSpreadsheet size={20} className="text-emerald-600" />
                 Anteprima Distinta per Ordine
               </h2>
-              <button 
+              <button
                 onClick={exportExcel}
                 className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-black text-xs hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100 uppercase tracking-widest"
               >
@@ -519,9 +517,9 @@ export const Configurator: React.FC = () => {
                 ))
               )}
             </div>
-            
+
             <div className="space-y-3">
-              <button 
+              <button
                 disabled={projectRows.length === 0 || isSaving}
                 onClick={handleSave}
                 className="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-500 disabled:opacity-30 transition-all flex items-center justify-center gap-3 shadow-xl shadow-blue-900/20"
@@ -529,7 +527,7 @@ export const Configurator: React.FC = () => {
                 <Save size={20} />
                 Salva nel Cloud
               </button>
-              <button 
+              <button
                 disabled={projectRows.length === 0}
                 onClick={exportExcel}
                 className="w-full bg-emerald-600 text-white font-black py-4 rounded-2xl hover:bg-emerald-500 disabled:opacity-30 transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-900/20"

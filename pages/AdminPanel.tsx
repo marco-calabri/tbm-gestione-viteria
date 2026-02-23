@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
-import { 
-  Upload, Database, FileSpreadsheet, AlertCircle, 
-  CheckCircle2, Settings2, Info, DownloadCloud, FileQuestion 
+import {
+  Upload, Database, FileSpreadsheet, AlertCircle,
+  CheckCircle2, Settings2, Info, DownloadCloud, FileQuestion
 } from 'lucide-react';
 
 export const AdminPanel: React.FC = () => {
@@ -30,8 +30,8 @@ export const AdminPanel: React.FC = () => {
 
     // 2. Foglio Moduli
     const wsModuli = XLSXLib.utils.json_to_sheet([
-      { "descrizione": "Modulo LB", "quantità": 1, "BA": "BA502856", "note": "Piastra" },
-      { "descrizione": "Modulo Centrale", "quantità": 2, "BA": "BA502856", "note": "" }
+      { "altezza": 3500, "descrizione": "Modulo LB", "quantità": 1, "BA": "BA502856", "note": "Piastra" },
+      { "altezza": 3500, "descrizione": "Modulo Centrale", "quantità": 2, "BA": "BA502856", "note": "" }
     ]);
     XLSXLib.utils.book_append_sheet(wb, wsModuli, "Moduli");
 
@@ -44,9 +44,10 @@ export const AdminPanel: React.FC = () => {
 
     // 4. Foglio Curve
     const wsCurve = XLSXLib.utils.json_to_sheet([
-      { "descrizione": "Curva 90° (Viti)", "quantità": 175, "BA": "BA700197", "note": "" },
-      { "descrizione": "Curva 90° (Piastre)", "quantità": 4, "BA": "BA502856", "note": "" }
+      { "altezza": 3500, "descrizione": "Curva 90° (Viti)", "quantità": 175, "BA": "BA700197", "note": "" },
+      { "altezza": 3500, "descrizione": "Curva 90° (Piastre)", "quantità": 4, "BA": "BA502856", "note": "" }
     ]);
+    XLSXLib.utils.book_append_sheet(wb, wsCurve, "Curve");
     XLSXLib.utils.book_append_sheet(wb, wsCurve, "Curve");
 
     // 5. Foglio Anagrafica Prodotti
@@ -71,7 +72,7 @@ export const AdminPanel: React.FC = () => {
         const data = evt.target?.result;
         const XLSXLib = (XLSX as any).utils ? XLSX : (XLSX as any).default;
         const workbook = XLSXLib.read(data, { type: 'binary' });
-        
+
         if (type === 'products') {
           const sheetName = workbook.SheetNames.find((n: string) => n.toLowerCase().includes('prodott')) || workbook.SheetNames[0];
           const json = XLSXLib.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -79,7 +80,7 @@ export const AdminPanel: React.FC = () => {
           setImportStatus({ type: 'success', message: `${json.length} prodotti importati con successo.` });
         } else {
           const newConfigs: any[] = [];
-          
+
           if (workbook.Sheets['Altezze']) {
             const dataAltezze = XLSXLib.utils.sheet_to_json(workbook.Sheets['Altezze']);
             newConfigs.push({
@@ -103,10 +104,12 @@ export const AdminPanel: React.FC = () => {
             newConfigs.push({
               id: 'moduli',
               categoryName: 'Moduli',
+              isHeightCategorized: true,
               options: dataModuli.map((row: any, idx: number) => ({
                 id: `mod_imp_${idx}`,
+                altezza: row['altezza'],
                 name: row['nome modulo'] || row['descrizione'],
-                multiplier: row['moltiplicatore'] || row['quantità'],
+                multiplier: row['moltiplicatore'] || row['quantità'] || 0,
                 code: row['codice'] || row['BA'],
                 note: row['note'],
                 category: 'moduli'
@@ -135,10 +138,12 @@ export const AdminPanel: React.FC = () => {
             newConfigs.push({
               id: 'curve',
               categoryName: 'Curve',
+              isHeightCategorized: true,
               options: dataCurve.map((row: any, idx: number) => ({
                 id: `curv_imp_${idx}`,
+                altezza: row['altezza'],
                 name: row['nome curva'] || row['descrizione'],
-                multiplier: row['moltiplicatore'] || row['quantità'],
+                multiplier: row['moltiplicatore'] || row['quantità'] || 0,
                 code: row['codice'] || row['BA'],
                 note: row['note'],
                 category: 'curve'
@@ -170,7 +175,7 @@ export const AdminPanel: React.FC = () => {
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Amministrazione</h1>
           <p className="text-slate-500 font-medium">Gestione dei database sincronizzati tramite Excel.</p>
         </div>
-        <button 
+        <button
           onClick={downloadTemplate}
           className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
         >
@@ -180,9 +185,8 @@ export const AdminPanel: React.FC = () => {
       </header>
 
       {importStatus.type && (
-        <div className={`p-5 rounded-2xl flex items-center gap-4 border-2 animate-in fade-in zoom-in duration-300 ${
-          importStatus.type === 'success' ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : 'bg-red-50 border-red-100 text-red-700'
-        }`}>
+        <div className={`p-5 rounded-2xl flex items-center gap-4 border-2 animate-in fade-in zoom-in duration-300 ${importStatus.type === 'success' ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : 'bg-red-50 border-red-100 text-red-700'
+          }`}>
           {importStatus.type === 'success' ? <CheckCircle2 size={24} className="text-emerald-500" /> : <AlertCircle size={24} className="text-red-500" />}
           <p className="font-bold">{importStatus.message}</p>
         </div>
@@ -200,7 +204,7 @@ export const AdminPanel: React.FC = () => {
           <p className="text-sm text-slate-500 font-medium relative z-10">
             Aggiorna l'elenco principale dei codici BA e le loro descrizioni.
           </p>
-          
+
           <label className="block cursor-pointer relative z-10">
             <div className="mt-4 border-2 border-dashed border-slate-200 rounded-2xl py-12 flex flex-col items-center hover:border-blue-400 hover:bg-blue-50/50 transition-all group/upload">
               <FileSpreadsheet className="text-slate-300 mb-3 group-hover/upload:text-blue-400 transition-colors" size={48} />
@@ -221,7 +225,7 @@ export const AdminPanel: React.FC = () => {
           <p className="text-sm text-slate-500 font-medium relative z-10">
             Importa i parametri di calcolo per Altezze, Moduli, Varie e Curve.
           </p>
-          
+
           <label className="block cursor-pointer relative z-10">
             <div className="mt-4 border-2 border-dashed border-slate-200 rounded-2xl py-12 flex flex-col items-center hover:border-indigo-400 hover:bg-indigo-50/50 transition-all group/upload">
               <Upload className="text-slate-300 mb-3 group-hover/upload:text-indigo-400 transition-colors" size={48} />
@@ -243,7 +247,7 @@ export const AdminPanel: React.FC = () => {
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Colonna 'Concatena': Non necessaria</span>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
             <p className="font-black text-blue-400 mb-3 uppercase text-xs tracking-widest border-b border-white/10 pb-2">Foglio: Altezze</p>

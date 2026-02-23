@@ -7,6 +7,12 @@
     },
     {
         "altezza": 3500,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3500,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -16,6 +22,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 245
+    },
+    {
+        "altezza": 3500,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3500,
@@ -37,6 +49,12 @@
     },
     {
         "altezza": 3400,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3400,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -46,6 +64,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 238
+    },
+    {
+        "altezza": 3400,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3400,
@@ -67,6 +91,12 @@
     },
     {
         "altezza": 3300,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3300,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -76,6 +106,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 231
+    },
+    {
+        "altezza": 3300,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3300,
@@ -97,6 +133,12 @@
     },
     {
         "altezza": 3200,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3200,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -106,6 +148,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 224
+    },
+    {
+        "altezza": 3200,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3200,
@@ -127,6 +175,12 @@
     },
     {
         "altezza": 3100,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3100,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -136,6 +190,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 217
+    },
+    {
+        "altezza": 3100,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3100,
@@ -157,6 +217,12 @@
     },
     {
         "altezza": 3000,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 3000,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -166,6 +232,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 210
+    },
+    {
+        "altezza": 3000,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 3000,
@@ -187,6 +259,12 @@
     },
     {
         "altezza": 2900,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2900,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -196,6 +274,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 203
+    },
+    {
+        "altezza": 2900,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2900,
@@ -217,6 +301,12 @@
     },
     {
         "altezza": 2800,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2800,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 4
@@ -226,6 +316,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 196
+    },
+    {
+        "altezza": 2800,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2800,
@@ -247,6 +343,12 @@
     },
     {
         "altezza": 2700,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2700,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -256,6 +358,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 189
+    },
+    {
+        "altezza": 2700,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2700,
@@ -277,6 +385,12 @@
     },
     {
         "altezza": 2600,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2600,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -286,6 +400,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 182
+    },
+    {
+        "altezza": 2600,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2600,
@@ -307,6 +427,12 @@
     },
     {
         "altezza": 2500,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2500,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -316,6 +442,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 175
+    },
+    {
+        "altezza": 2500,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2500,
@@ -337,6 +469,12 @@
     },
     {
         "altezza": 2400,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2400,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -346,6 +484,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 168
+    },
+    {
+        "altezza": 2400,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2400,
@@ -367,6 +511,12 @@
     },
     {
         "altezza": 2300,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2300,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -376,6 +526,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 161
+    },
+    {
+        "altezza": 2300,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2300,
@@ -397,6 +553,12 @@
     },
     {
         "altezza": 2200,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2200,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -406,6 +568,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 154
+    },
+    {
+        "altezza": 2200,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2200,
@@ -427,6 +595,12 @@
     },
     {
         "altezza": 2100,
+        "tipo": "Curva 90° (Viti)",
+        "codice": "BA700275",
+        "val": 20
+    },
+    {
+        "altezza": 2100,
         "tipo": "Curva 90° (Piastre)",
         "codice": "BA502856",
         "val": 0
@@ -436,6 +610,12 @@
         "tipo": "Curva 180° (Viti)",
         "codice": "BA700197",
         "val": 147
+    },
+    {
+        "altezza": 2100,
+        "tipo": "Curva 180° (Viti)",
+        "codice": "BA700275",
+        "val": 32
     },
     {
         "altezza": 2100,
