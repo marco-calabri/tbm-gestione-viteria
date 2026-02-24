@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as XLSX from 'xlsx-js-style';
 import { ConfigCategory, Product, ConfigOption } from '../types';
 import {
@@ -46,11 +46,15 @@ export const Configurator: React.FC = () => {
     return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
   });
 
+  const { state } = useLocation();
+  const projectToLoad = state?.project;
+
   const [activeCategory, setActiveCategory] = useState<string>('altezze');
-  const [selectedHeight, setSelectedHeight] = useState<string>('3500');
-  const [selections, setSelections] = useState<Record<string, number>>({});
-  const [label, setLabel] = useState<string>('');
+  const [selectedHeight, setSelectedHeight] = useState<string>(projectToLoad?.meta?.height || '3500');
+  const [selections, setSelections] = useState<Record<string, number>>(projectToLoad?.selections || {});
+  const [label, setLabel] = useState<string>(projectToLoad?.label || '');
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoadedFromHistory, setIsLoadedFromHistory] = useState(!!projectToLoad);
 
   useEffect(() => {
     const loadDatabases = async () => {
@@ -92,6 +96,11 @@ export const Configurator: React.FC = () => {
 
   useEffect(() => {
     if (configs[0].options.length === 0) return;
+
+    if (isLoadedFromHistory) {
+      setIsLoadedFromHistory(false); // Reset per permettere cambi altezza futuri
+      return;
+    }
 
     const newSelections: Record<string, number> = {};
     const altezzeCat = configs.find(c => c.id === 'altezze');
@@ -355,6 +364,7 @@ export const Configurator: React.FC = () => {
       results: Object.entries(totalsByCode).map(([code, total]) => ({
         code, total, description: products.find(p => p.id === code)?.description || ''
       })),
+      selections,
       meta: { height: selectedHeight }
     }, ...history]));
     navigate('/history');

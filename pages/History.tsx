@@ -1,8 +1,10 @@
-
-import React, { useState, useEffect } from 'react';
-import { Clock, Search, FileText, Trash2, ExternalLink, ChevronRight } from 'lucide-react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Clock, Search, FileText, Trash2, ExternalLink, ChevronRight, Eye } from 'lucide-react';
 
 export const History: React.FC = () => {
+  const navigate = useNavigate();
   const [history, setHistory] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -17,7 +19,7 @@ export const History: React.FC = () => {
     localStorage.setItem('tbm_history', JSON.stringify(updated));
   };
 
-  const filtered = history.filter(h => 
+  const filtered = history.filter(h =>
     h.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -28,11 +30,11 @@ export const History: React.FC = () => {
           <h1 className="text-3xl font-bold text-slate-900">Storico Calcoli</h1>
           <p className="text-slate-500">Visualizza e gestisci i tuoi progetti salvati.</p>
         </div>
-        
+
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Cerca per nome..."
             className="pl-10 pr-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none w-full md:w-64"
             value={searchTerm}
@@ -69,15 +71,17 @@ export const History: React.FC = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button 
-                    onClick={() => alert('Visualizzazione dettaglio...')}
-                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  <button
+                    onClick={() => navigate('/configurator', { state: { project: item } })}
+                    className="p-2 text-tbm-magenta hover:bg-tbm-magenta/10 rounded-lg transition-colors flex items-center gap-1"
+                    title="Visualizza dettagli"
                   >
-                    <ExternalLink size={20} />
+                    <Eye size={20} />
+                    <span className="text-xs font-bold">Dettagli</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => deleteEntry(item.id)}
                     className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   >
