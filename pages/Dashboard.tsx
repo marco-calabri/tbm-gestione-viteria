@@ -8,12 +8,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
 
-  const mockStats = [
-    { label: 'Calcoli Salvati', value: '24', icon: <Clock className="text-blue-500" /> },
-    { label: 'Prodotti nel Database', value: '1,200', icon: <Package className="text-emerald-500" /> },
-    { label: 'Esportazioni Mese', value: '12', icon: <FileSpreadsheet className="text-orange-500" /> },
-  ];
-
   const mockChartData = [
     { name: 'BA700197', qty: 1200 },
     { name: 'BA700289', qty: 850 },
@@ -30,20 +24,6 @@ export const Dashboard: React.FC = () => {
         <h1 className="text-3xl font-bold text-slate-900">Benvenuto, {user?.displayName}</h1>
         <p className="text-slate-500 mt-1">Gestisci i fabbisogni di viteria e componenti per i tuoi progetti.</p>
       </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {mockStats.map((stat, i) => (
-          <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-            <div className="p-3 bg-slate-50 rounded-lg">
-              {stat.icon}
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-500">{stat.label}</p>
-              <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
