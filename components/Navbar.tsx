@@ -10,14 +10,19 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = [
-    { path: '/', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-    { path: '/configurator', label: 'Nuovo Calcolo', icon: <Settings2 size={20} /> },
-    { path: '/history', label: 'Storico', icon: <History size={20} /> },
-  ];
+  const navLinks = [];
 
   if (user?.role === UserRole.ADMIN) {
-    navLinks.push({ path: '/admin', label: 'Admin', icon: <ShieldAlert size={20} /> });
+    navLinks.push(
+      { path: '/', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+      { path: '/configurator', label: 'Nuovo Calcolo', icon: <Settings2 size={20} /> },
+      { path: '/history', label: 'Storico', icon: <History size={20} /> },
+      { path: '/admin', label: 'Admin', icon: <ShieldAlert size={20} /> }
+    );
+  } else {
+    navLinks.push(
+      { path: '/configurator', label: 'Elaborazione Progetto', icon: <Settings2 size={20} /> }
+    );
   }
 
   const isActive = (path: string) => location.pathname === path;
@@ -27,21 +32,20 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
-            <Link to="/" className="text-xl font-bold text-blue-600 tracking-tight flex items-center gap-2">
+            <Link to={user?.role === UserRole.ADMIN ? "/" : "/configurator"} className="text-xl font-bold text-blue-600 tracking-tight flex items-center gap-2">
               <div className="bg-blue-600 text-white p-1 rounded">TBM</div>
               <span>Gestione Viteria</span>
             </Link>
-            
+
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 ${
-                    isActive(link.path)
-                      ? 'bg-blue-50 text-blue-700'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 ${isActive(link.path)
+                    ? 'bg-blue-50 text-blue-700'
+                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
                 >
                   {link.icon}
                   {link.label}
@@ -64,7 +68,7 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
 
-          <button 
+          <button
             className="md:hidden p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -81,9 +85,8 @@ export const Navbar: React.FC = () => {
               key={link.path}
               to={link.path}
               onClick={() => setIsMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium ${
-                isActive(link.path) ? 'bg-blue-50 text-blue-700' : 'text-slate-600'
-              }`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium ${isActive(link.path) ? 'bg-blue-50 text-blue-700' : 'text-slate-600'
+                }`}
             >
               {link.icon}
               {link.label}
