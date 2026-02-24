@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+    --color-tbm-brand: #9d2d64;
+    /* Magenta scuro dall'immagine */
+    --color-tbm-magenta: #9d2d64;
+    --color-tbm-rose: #c0586e;
+    --color-tbm-coral: #d47d63;
+    --color-tbm-sunset: #e69d51;
+    --color-tbm-sunset-light: #ffb74d;
+
+    --color-primary: var(--color-tbm-brand);
+}
+
 @layer base {
     body {
         @apply bg-slate-50 text-slate-900;

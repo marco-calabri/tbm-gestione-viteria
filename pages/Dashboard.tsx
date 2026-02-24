@@ -22,7 +22,7 @@ export const Dashboard: React.FC = () => {
     { name: 'BA700275', qty: 600 },
   ];
 
-  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+  const COLORS = ['#9d2d64', '#c0586e', '#d47d63', '#e69d51', '#ffb74d'];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -69,13 +69,13 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-white relative overflow-hidden shadow-lg">
+          <div className="bg-gradient-to-r from-tbm-magenta to-tbm-sunset rounded-2xl p-8 text-white relative overflow-hidden shadow-lg border border-white/10">
             <div className="relative z-10">
               <h2 className="text-2xl font-bold mb-2">Pronto per un nuovo calcolo?</h2>
-              <p className="text-blue-100 mb-6 max-w-md">Utilizza il configuratore avanzato per determinare esattamente la quantità di viteria necessaria in base alle specifiche di progetto.</p>
+              <p className="text-white/80 mb-6 max-w-md">Utilizza il configuratore avanzato per determinare esattamente la quantità di viteria necessaria in base alle specifiche di progetto.</p>
               <Link
                 to="/configurator"
-                className="inline-flex items-center gap-2 bg-white text-blue-700 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition-all shadow-md group"
+                className="inline-flex items-center gap-2 bg-white text-tbm-magenta px-6 py-3 rounded-full font-bold hover:shadow-lg transition-all shadow-md group"
               >
                 Inizia Configurazione
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -89,18 +89,29 @@ export const Dashboard: React.FC = () => {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-full">
             <h2 className="text-lg font-bold mb-4">Azioni Rapide</h2>
             <div className="grid grid-cols-1 gap-3">
-              <Link to="/configurator" className="flex items-center gap-3 p-4 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-blue-100">
+              <Link to="/configurator" className="flex items-center gap-3 p-4 rounded-lg bg-tbm-magenta text-white hover:opacity-90 transition-all shadow-sm">
                 <Settings2 size={20} />
                 <span className="font-medium">Nuova Configurazione</span>
               </Link>
-              <Link to="/history" className="flex items-center gap-3 p-4 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-blue-100">
+              <Link to="/history" className="flex items-center gap-3 p-4 rounded-lg bg-tbm-rose text-white hover:opacity-90 transition-all shadow-sm">
                 <Clock size={20} />
                 <span className="font-medium">Vedi Storico</span>
               </Link>
-              <button onClick={() => alert('Feature in sviluppo')} className="flex items-center gap-3 p-4 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-blue-100 text-left">
+              <button
+                onClick={() => alert('Feature in sviluppo')}
+                className="flex items-center gap-3 p-4 rounded-lg bg-tbm-coral text-white hover:opacity-90 transition-all shadow-sm text-left"
+              >
                 <FileSpreadsheet size={20} />
                 <span className="font-medium">Esporta Riepilogo Generale</span>
               </button>
+              <div className="flex items-center gap-3 p-4 rounded-lg bg-tbm-sunset text-white opacity-80 cursor-default shadow-sm">
+                <Package size={20} />
+                <span className="font-medium">Gestione Magazzino</span>
+              </div>
+              <div className="flex items-center gap-3 p-4 rounded-lg bg-tbm-sunset-light text-white opacity-80 cursor-default shadow-sm">
+                <FileSpreadsheet size={20} />
+                <span className="font-medium">Statistiche Avanzate</span>
+              </div>
             </div>
           </div>
         </div>

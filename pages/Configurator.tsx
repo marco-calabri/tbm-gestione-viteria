@@ -365,15 +365,15 @@ export const Configurator: React.FC = () => {
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="p-6 bg-slate-50 border-b border-slate-200 flex flex-col md:flex-row justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600 text-white rounded-xl"><Calculator /></div>
+            <div className="p-2 bg-tbm-magenta text-white rounded-xl"><Calculator /></div>
             <h1 className="text-2xl font-black text-slate-800 tracking-tight">Elaborazione Progetto</h1>
           </div>
           <div className="flex flex-wrap gap-4 items-center">
             <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-              <Ruler size={18} className="text-blue-500" />
+              <Ruler size={18} className="text-tbm-magenta" />
               <span className="text-xs font-bold text-slate-400 uppercase">Altezza Progetto:</span>
               <select
-                className="font-bold text-blue-600 outline-none cursor-pointer bg-transparent"
+                className="font-bold text-tbm-magenta outline-none cursor-pointer bg-transparent"
                 value={selectedHeight}
                 onChange={e => setSelectedHeight(e.target.value)}
               >
@@ -397,7 +397,7 @@ export const Configurator: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all ${activeCategory === cat.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-500 hover:bg-white hover:shadow-sm'
+                className={`w-full text-left px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all ${activeCategory === cat.id ? 'bg-tbm-magenta text-white shadow-lg shadow-tbm-magenta/20' : 'text-slate-500 hover:bg-white hover:shadow-sm'
                   }`}
               >
                 {cat.id === 'altezze' && <Ruler size={18} />}
@@ -415,11 +415,11 @@ export const Configurator: React.FC = () => {
                 filteredOptions.map(opt => (
                   <div key={opt.id} className={`p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 group ${opt.multiplier === 0
                     ? 'bg-slate-50/50 border-slate-100 grayscale opacity-60'
-                    : 'border-slate-100 hover:border-blue-200 hover:bg-blue-50/20'
+                    : 'border-slate-100 hover:border-tbm-magenta/50 hover:bg-tbm-magenta/5'
                     }`}>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <h4 className={`font-bold transition-colors ${opt.multiplier === 0 ? 'text-slate-400' : 'text-slate-800 group-hover:text-blue-700'}`}>
+                        <h4 className={`font-bold transition-colors ${opt.multiplier === 0 ? 'text-slate-400' : 'text-slate-800 group-hover:text-tbm-magenta'}`}>
                           {opt.name}
                         </h4>
                         {opt.multiplier === 0 && (
@@ -432,12 +432,12 @@ export const Configurator: React.FC = () => {
                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-slate-100 text-slate-500'}`}>
                               {opt.code}
                             </span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-blue-100 text-blue-600'}`}>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-tbm-magenta/10 text-tbm-magenta'}`}>
                               Multiplier: x{opt.multiplier}
                             </span>
                           </>
                         ) : (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-600">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-tbm-magenta/10 text-tbm-magenta">
                             Kit Configurazione Curva
                           </span>
                         )}
@@ -452,13 +452,13 @@ export const Configurator: React.FC = () => {
                         disabled={opt.multiplier === 0 || opt.name === "Modulo Centrale"}
                         className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${opt.multiplier === 0 || opt.name === "Modulo Centrale"
                           ? 'bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed opacity-70'
-                          : 'border-slate-200 focus:border-blue-500 bg-white'
+                          : 'border-slate-200 focus:border-tbm-magenta bg-white'
                           }`}
                         value={selections[opt.id] || ''}
                         onChange={e => handleInputChange(opt.id, e.target.value)}
                       />
                       {opt.name === "Modulo Centrale" && (
-                        <p className="text-[8px] font-black text-blue-500 mt-1 uppercase text-center">Auto</p>
+                        <p className="text-[8px] font-black text-tbm-magenta mt-1 uppercase text-center">Auto</p>
                       )}
                     </div>
                   </div>
@@ -479,7 +479,7 @@ export const Configurator: React.FC = () => {
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
             <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <h2 className="text-lg font-black text-slate-800 flex items-center gap-2">
-                <TableIcon size={20} className="text-blue-500" />
+                <TableIcon size={20} className="text-tbm-magenta" />
                 Dettaglio Analitico Elaborazione
               </h2>
             </div>
@@ -490,7 +490,7 @@ export const Configurator: React.FC = () => {
                     <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-wider">Riferimento Ricerca</th>
                     <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-wider text-center">Numero Pezzi</th>
                     {MAIN_CODES.map(code => (
-                      <th key={code} className="px-6 py-4 text-[10px] font-black text-blue-600 uppercase tracking-wider text-center">{code}</th>
+                      <th key={code} className="px-6 py-4 text-[10px] font-black text-tbm-magenta uppercase tracking-wider text-center">{code}</th>
                     ))}
                   </tr>
                 </thead>
@@ -503,13 +503,13 @@ export const Configurator: React.FC = () => {
                     </tr>
                   ) : (
                     projectRows.map((row, i) => (
-                      <tr key={i} className="hover:bg-blue-50/10 transition-colors">
+                      <tr key={i} className="hover:bg-tbm-magenta/5 transition-colors">
                         <td className="px-6 py-4 text-xs font-bold text-slate-700">{row.riferimento}</td>
                         <td className="px-6 py-4 text-center"><span className="bg-slate-100 px-3 py-1 rounded-lg font-black text-slate-900">{row.pezzi}</span></td>
                         {MAIN_CODES.map(code => (
                           <td key={code} className="px-6 py-4 text-center">
                             {row.distribuzione[code] ? (
-                              <span className="text-sm font-bold text-blue-600">{row.distribuzione[code].toLocaleString()}</span>
+                              <span className="text-sm font-bold text-tbm-magenta">{row.distribuzione[code].toLocaleString()}</span>
                             ) : (
                               <span className="text-slate-200">-</span>
                             )}
@@ -524,7 +524,7 @@ export const Configurator: React.FC = () => {
                     <tr className="bg-slate-900 text-white">
                       <td colSpan={2} className="px-6 py-4 text-right font-black uppercase text-[10px] tracking-widest text-slate-400">Totali Codici Utilizzati</td>
                       {MAIN_CODES.map(code => (
-                        <td key={code} className="px-6 py-4 text-center font-black text-lg text-blue-400">
+                        <td key={code} className="px-6 py-4 text-center font-black text-lg text-tbm-sunset">
                           {totalsByCode[code]?.toLocaleString() || 0}
                         </td>
                       ))}
@@ -573,7 +573,7 @@ export const Configurator: React.FC = () => {
                       <td className="px-4 py-3 border-r border-slate-100 font-bold">{row.Codice}</td>
                       <td className="px-4 py-3 border-r border-slate-100">{row.Configurazione}</td>
                       <td className="px-4 py-3 border-r border-slate-100">{row.Fornitore}</td>
-                      <td className="px-4 py-3 text-center font-black text-blue-600">{row.Ordinare}</td>
+                      <td className="px-4 py-3 text-center font-black text-tbm-magenta">{row.Ordinare}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -585,7 +585,7 @@ export const Configurator: React.FC = () => {
         <div className="xl:col-span-1 space-y-6">
           <div className="bg-slate-900 rounded-3xl shadow-2xl p-8 sticky top-24 text-white">
             <h3 className="text-xl font-black mb-6 flex items-center gap-2">
-              <Package className="text-blue-400" />
+              <Package className="text-tbm-sunset" />
               Totali Finali
             </h3>
             <div className="space-y-4 mb-8">
