@@ -19,6 +19,14 @@ const INITIAL_PRODUCTS: Product[] = [
 
 const MAIN_CODES = ['BA700197', 'BA700289', 'BA502856', 'BA700307', 'BA700275'];
 
+const getGroupName = (name: string, category?: string) => {
+  if (category === 'curve') {
+    if (name.includes('90°')) return 'Curva 90°';
+    if (name.includes('180°')) return 'Curva 180°';
+  }
+  return name;
+};
+
 const INITIAL_CONFIGS: ConfigCategory[] = [
   { id: 'altezze', categoryName: 'Altezze', isHeightCategorized: true, options: [] },
   { id: 'moduli', categoryName: 'Moduli', isHeightCategorized: true, options: [] },
@@ -116,33 +124,54 @@ export const Configurator: React.FC = () => {
 
   const filteredOptions = useMemo(() => {
     if (!currentCategory) return [];
+    let opts = currentCategory.options;
     if (currentCategory.isHeightCategorized) {
-      return currentCategory.options.filter(opt => opt.altezza?.toString() === selectedHeight);
+      opts = opts.filter(opt => opt.altezza?.toString() === selectedHeight);
     }
-    return currentCategory.options;
-  }, [currentCategory, selectedHeight]);
+
+    if (activeCategory === 'curve') {
+      const uniqueGroups: ConfigOption[] = [];
+      const seen = new Set();
+      opts.forEach(opt => {
+        const gName = getGroupName(opt.name, 'curve');
+        if (!seen.has(gName)) {
+          seen.add(gName);
+          uniqueGroups.push({ ...opt, name: gName });
+        }
+      });
+      return uniqueGroups;
+    }
+
+    return opts;
+  }, [currentCategory, selectedHeight, activeCategory]);
 
   const projectRows = useMemo(() => {
-    const rows: any[] = [];
+    const groupedData: Record<string, any> = {};
+
     configs.forEach(cat => {
       cat.options.forEach(opt => {
         const qty = selections[opt.id] || 0;
-        if (qty > 0 && opt.multiplier > 0) {
-          const concatenazione = `${cat.categoryName}${opt.altezza || ''}${opt.name}`;
-          rows.push({
+        if (qty <= 0 || opt.multiplier <= 0) return;
+
+        const gName = getGroupName(opt.name, cat.id);
+        const groupKey = `${cat.id}-${gName}-${opt.altezza || 'all'}`;
+
+        if (!groupedData[groupKey]) {
+          groupedData[groupKey] = {
             id: opt.id,
-            concatenazione,
             categoria: cat.categoryName,
-            riferimento: opt.name,
+            riferimento: gName,
             pezzi: qty,
-            distribuzione: {
-              [opt.code]: qty * opt.multiplier
-            }
-          });
+            distribuzione: {}
+          };
         }
+
+        const code = opt.code;
+        groupedData[groupKey].distribuzione[code] = (groupedData[groupKey].distribuzione[code] || 0) + (qty * opt.multiplier);
       });
     });
-    return rows;
+
+    return Object.values(groupedData);
   }, [selections, configs, selectedHeight]);
 
   const totalsByCode = useMemo(() => {
@@ -180,9 +209,18 @@ export const Configurator: React.FC = () => {
     const val = isNaN(num) ? 0 : Math.max(0, num);
 
     setSelections(prev => {
-      const next = { ...prev, [optionId]: val };
+      const next = { ...prev };
       const changedOpt = configs.flatMap(c => c.options).find(o => o.id === optionId);
       if (!changedOpt) return next;
+
+      const gName = getGroupName(changedOpt.name, changedOpt.category);
+      const optionsToSync = configs.flatMap(c => c.options).filter(o =>
+        o.category === changedOpt.category &&
+        getGroupName(o.name, o.category) === gName &&
+        o.altezza === changedOpt.altezza
+      );
+
+      optionsToSync.forEach(o => { next[o.id] = val; });
 
       if (changedOpt.category === 'altezze') {
         const moduloName = changedOpt.name.replace('Centina', 'Modulo');
@@ -191,16 +229,6 @@ export const Configurator: React.FC = () => {
         );
         if (targetModulo && targetModulo.multiplier > 0) {
           next[targetModulo.id] = val;
-        }
-      }
-
-      if (changedOpt.category === 'curve' && changedOpt.name.includes('(Viti)')) {
-        const piastreName = changedOpt.name.replace('(Viti)', '(Piastre)');
-        const targetPiastre = configs.find(c => c.id === 'curve')?.options.find(
-          o => o.name === piastreName && o.altezza?.toString() === selectedHeight
-        );
-        if (targetPiastre && targetPiastre.multiplier > 0) {
-          next[targetPiastre.id] = val;
         }
       }
 
@@ -347,12 +375,20 @@ export const Configurator: React.FC = () => {
                         )}
                       </div>
                       <div className="flex gap-2">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-slate-100 text-slate-500'}`}>
-                          {opt.code}
-                        </span>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-blue-100 text-blue-600'}`}>
-                          Multiplier: x{opt.multiplier}
-                        </span>
+                        {activeCategory !== 'curve' || opt.name === 'Pannelli 10 mm' ? (
+                          <>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-slate-100 text-slate-500'}`}>
+                              {opt.code}
+                            </span>
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${opt.multiplier === 0 ? 'bg-slate-100 text-slate-400' : 'bg-blue-100 text-blue-600'}`}>
+                              Multiplier: x{opt.multiplier}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-600">
+                            Kit Configurazione Curva
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="text-right">
@@ -539,6 +575,6 @@ export const Configurator: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
