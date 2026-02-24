@@ -52,8 +52,46 @@ const App: React.FC = () => {
 
   const login = async (username: string, pass: string) => {
     try {
-      const response = await fetch('./Database/Utenti.json');
-      const utenti = await response.json();
+      let utenti: any[] = [];
+      const localUtenti = localStorage.getItem('tbm_db_utenti');
+
+      const loadDatabases = async () => {
+        try {
+          const fetchDB = async (name: string) => {
+            const local = localStorage.getItem(`tbm_db_${name.toLowerCase().replace('.json', '')}`);
+            if (local) return JSON.parse(local);
+            const res = await fetch(`./Database/${name}`);
+            const data = await res.json();
+            localStorage.setItem(`tbm_db_${name.toLowerCase().replace('.json', '')}`, JSON.stringify(data));
+            return data;
+          };
+
+          const [dataAltezze, dataModuli, dataVarie, dataCurve] = await Promise.all([
+            fetchDB('AltezzeDB.json'),
+            fetchDB('ModuliDB.json'),
+            fetchDB('VarieDB.json'),
+            fetchDB('CurveDB.json')
+          ]);
+
+          // You can store these in context or state if needed, or just ensure they are in localStorage
+          // For now, just ensuring they are loaded and stored in localStorage is sufficient.
+          console.log("Databases loaded and synchronized with localStorage.");
+        } catch (error) {
+          console.error("Error loading databases:", error);
+          throw new Error("Errore durante il caricamento dei database.");
+        }
+      };
+
+      if (localUtenti) {
+        utenti = JSON.parse(localUtenti);
+      } else {
+        const response = await fetch('./Database/Utenti.json');
+        utenti = await response.json();
+        localStorage.setItem('tbm_db_utenti', JSON.stringify(utenti));
+      }
+
+      // Load other databases after user authentication is handled
+      await loadDatabases();
 
       const foundUser = utenti.find((u: any) =>
         u.username.toLowerCase() === username.toLowerCase() && u.password === pass

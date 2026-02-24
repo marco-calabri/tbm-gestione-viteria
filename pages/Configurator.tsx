@@ -59,15 +59,18 @@ export const Configurator: React.FC = () => {
   useEffect(() => {
     const loadDatabases = async () => {
       try {
-        const [resAltezze, resModuli, resVarie, resCurve] = await Promise.all([
-          fetch('./Database/AltezzeDB.json'),
-          fetch('./Database/ModuliDB.json'),
-          fetch('./Database/VarieDB.json'),
-          fetch('./Database/CurveDB.json')
-        ]);
+        const fetchDB = async (name: string) => {
+          const local = localStorage.getItem(`tbm_db_${name.toLowerCase().replace('.json', '')}`);
+          if (local) return JSON.parse(local);
+          const res = await fetch(`./Database/${name}`);
+          return res.json();
+        };
 
         const [dataAltezze, dataModuli, dataVarie, dataCurve] = await Promise.all([
-          resAltezze.json(), resModuli.json(), resVarie.json(), resCurve.json()
+          fetchDB('AltezzeDB.json'),
+          fetchDB('ModuliDB.json'),
+          fetchDB('VarieDB.json'),
+          fetchDB('CurveDB.json')
         ]);
 
         const mapData = (data: any[], catId: string, defaultCode?: string) =>
@@ -215,6 +218,12 @@ export const Configurator: React.FC = () => {
         totals[code] = (totals[code] || 0) + (val as number);
       });
     });
+
+    // Logica Punto 1: Sottrazione viti pannelli (BA700307) dal totale viti standard (BA700197)
+    if (totals['BA700307'] && totals['BA700197']) {
+      totals['BA700197'] = Math.max(0, totals['BA700197'] - totals['BA700307']);
+    }
+
     return totals;
   }, [projectRows]);
 
@@ -420,6 +429,7 @@ export const Configurator: React.FC = () => {
           </div>
 
           <div className="flex-grow p-6 lg:p-10 bg-white">
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(opt => (
@@ -453,7 +463,16 @@ export const Configurator: React.FC = () => {
                         )}
                       </div>
                     </div>
-                    <div className="text-right">
+                    {activeCategory === 'curve' && opt.name === 'Pannelli 10 mm' && (
+                      <div className="hidden md:flex flex-1 items-center gap-3 px-4 py-2 bg-amber-50 border border-amber-100 rounded-xl mx-4">
+                        <Info size={14} className="text-tbm-sunset shrink-0" />
+                        <p className="text-[10px] text-amber-800 leading-tight">
+                          <span className="font-bold">Nota:</span> Le viti <span className="font-bold">BA700307</span> verranno sottratte dal totale delle <span className="font-bold">BA700197</span>.
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="text-right shrink-0">
                       <p className={`text-[10px] font-bold uppercase mb-1 ${opt.multiplier === 0 ? 'text-slate-300' : 'text-slate-400'}`}>Pezzi</p>
                       <input
                         type="number"

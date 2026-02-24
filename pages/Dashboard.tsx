@@ -7,16 +7,14 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 
 export const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const [codici, setCodici] = React.useState<any[]>([]);
 
-  const mockChartData = [
-    { name: 'BA700197', qty: 1200 },
-    { name: 'BA700289', qty: 850 },
-    { name: 'BA502856', qty: 450 },
-    { name: 'BA700307', qty: 600 },
-    { name: 'BA700275', qty: 600 },
-  ];
-
-  const COLORS = ['#9d2d64', '#c0586e', '#d47d63', '#e69d51', '#ffb74d'];
+  React.useEffect(() => {
+    fetch('./Database/Codici.json')
+      .then(res => res.json())
+      .then(data => setCodici(data))
+      .catch(err => console.error("Errore nel caricamento codici:", err));
+  }, []);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -27,25 +25,34 @@ export const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <h2 className="text-lg font-bold mb-6">Codici più utilizzati (Ultimi 30gg)</h2>
-            <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={mockChartData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                  <YAxis axisLine={false} tickLine={false} />
-                  <Tooltip
-                    cursor={{ fill: '#f1f5f9' }}
-                    contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                  />
-                  <Bar dataKey="qty" radius={[4, 4, 0, 0]}>
-                    {mockChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+          <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
+              <Package className="text-tbm-magenta" size={20} />
+              Codici Viteria di Riferimento
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-slate-100 bg-slate-50">
+                    <th className="px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-wider">Codice</th>
+                    <th className="px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-wider">Descrizione</th>
+                    <th className="px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-wider">Categoria</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {codici.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="px-4 py-3 text-sm font-bold text-tbm-magenta">{item.codice}</td>
+                      <td className="px-4 py-3 text-xs text-slate-600 leading-tight">{item.descrizione}</td>
+                      <td className="px-4 py-3">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-500 uppercase">
+                          {item.categoria}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 

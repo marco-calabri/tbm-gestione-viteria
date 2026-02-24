@@ -1,188 +1,65 @@
 
 import * as React from 'react';
 import { useState } from 'react';
-import * as XLSX from 'xlsx-js-style';
 import {
-  Upload, Database, FileSpreadsheet, AlertCircle,
-  CheckCircle2, Settings2, Info, DownloadCloud, FileQuestion
+  AlertCircle, CheckCircle2, Info, FileJson, Download, Upload
 } from 'lucide-react';
 
 export const AdminPanel: React.FC = () => {
   const [importStatus, setImportStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
-  const [isProcessing, setIsProcessing] = useState(false);
 
-  // Funzione per generare e scaricare il template Excel corretto
-  const downloadTemplate = () => {
-    // Gestione robusta dell'importazione esm.sh
-    const XLSXLib = (XLSX as any).utils ? XLSX : (XLSX as any).default;
-    if (!XLSXLib || !XLSXLib.utils) {
-      alert("Libreria Excel non inizializzata correttamente.");
-      return;
+  const handleJsonDownload = async (filename: string) => {
+    try {
+      const response = await fetch(`./Database/${filename}`);
+      const data = await response.json();
+      const blob = new Blob([JSON.stringify(data, null, 4)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      alert(`Errore nello scaricamento di ${filename}`);
     }
-
-    const wb = XLSXLib.utils.book_new();
-
-    // 1. Foglio Altezze
-    const wsAltezze = XLSXLib.utils.json_to_sheet([
-      { "altezza": 3500, "tipo centina": "Centina Intera", "numero pezzi per codice": 48, "BA700197": 48, "note": "Esempio" },
-      { "altezza": 3400, "tipo centina": "Centina Intera", "numero pezzi per codice": 48, "BA700197": 48, "note": "" }
-    ]);
-    XLSXLib.utils.book_append_sheet(wb, wsAltezze, "Altezze");
-
-    // 2. Foglio Moduli
-    const wsModuli = XLSXLib.utils.json_to_sheet([
-      { "altezza": 3500, "descrizione": "Modulo LB", "quantità": 1, "BA": "BA502856", "note": "Piastra" },
-      { "altezza": 3500, "descrizione": "Modulo Centrale", "quantità": 2, "BA": "BA502856", "note": "" }
-    ]);
-    XLSXLib.utils.book_append_sheet(wb, wsModuli, "Moduli");
-
-    // 3. Foglio Varie
-    const wsVarie = XLSXLib.utils.json_to_sheet([
-      { "descrizione": "Coclee", "quantità": 4, "BA": "BA700289", "note": "" },
-      { "descrizione": "Exit Point", "quantità": 25, "BA": "BA700197", "note": "" }
-    ]);
-    XLSXLib.utils.book_append_sheet(wb, wsVarie, "Varie");
-
-    // 4. Foglio Curve
-    const wsCurve = XLSXLib.utils.json_to_sheet([
-      { "altezza": 3500, "descrizione": "Curva 90° (Viti)", "quantità": 175, "BA": "BA700197", "note": "" },
-      { "altezza": 3500, "descrizione": "Curva 90° (Piastre)", "quantità": 4, "BA": "BA502856", "note": "" }
-    ]);
-    XLSXLib.utils.book_append_sheet(wb, wsCurve, "Curve");
-    XLSXLib.utils.book_append_sheet(wb, wsCurve, "Curve");
-
-    // 5. Foglio Anagrafica Prodotti
-    const wsProdotti = XLSXLib.utils.json_to_sheet([
-      { "id": "BA700197", "description": "VITE AUTOFILETTANTE PER LEGNO 4x16...", "unit": "pezzi" },
-      { "id": "BA700289", "description": "RIVETTO A STRAPPO 3,2x10...", "unit": "pezzi" }
-    ]);
-    XLSXLib.utils.book_append_sheet(wb, wsProdotti, "Prodotti");
-
-    XLSXLib.writeFile(wb, "TBM_Template_Database.xlsx");
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, type: 'products' | 'configs') => {
+  const handleJsonUpload = (e: React.ChangeEvent<HTMLInputElement>, filename: string) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setIsProcessing(true);
     const reader = new FileReader();
-
     reader.onload = (evt) => {
       try {
-        const data = evt.target?.result;
-        const XLSXLib = (XLSX as any).utils ? XLSX : (XLSX as any).default;
-        const workbook = XLSXLib.read(data, { type: 'binary' });
+        const content = evt.target?.result as string;
+        JSON.parse(content); // Valida il JSON
+        const storageKey = `tbm_db_${filename.toLowerCase().replace('.json', '')}`;
+        localStorage.setItem(storageKey, content);
+        setImportStatus({ type: 'success', message: `${filename} caricato correttamente nel database locale.` });
 
-        if (type === 'products') {
-          const sheetName = workbook.SheetNames.find((n: string) => n.toLowerCase().includes('prodott')) || workbook.SheetNames[0];
-          const json = XLSXLib.utils.sheet_to_json(workbook.Sheets[sheetName]);
-          localStorage.setItem('tbm_products', JSON.stringify(json));
-          setImportStatus({ type: 'success', message: `${json.length} prodotti importati con successo.` });
-        } else {
-          const newConfigs: any[] = [];
-
-          if (workbook.Sheets['Altezze']) {
-            const dataAltezze = XLSXLib.utils.sheet_to_json(workbook.Sheets['Altezze']);
-            newConfigs.push({
-              id: 'altezze',
-              categoryName: 'Altezze',
-              isHeightCategorized: true,
-              options: dataAltezze.map((row: any, idx: number) => ({
-                id: `h_imp_${idx}`,
-                altezza: row['altezza'],
-                name: row['tipo centina'],
-                multiplier: row['numero pezzi per codice'],
-                code: row['BA700197'] || 'BA700197',
-                note: row['note'],
-                category: 'altezze'
-              }))
-            });
-          }
-
-          if (workbook.Sheets['Moduli']) {
-            const dataModuli = XLSXLib.utils.sheet_to_json(workbook.Sheets['Moduli']);
-            newConfigs.push({
-              id: 'moduli',
-              categoryName: 'Moduli',
-              isHeightCategorized: true,
-              options: dataModuli.map((row: any, idx: number) => ({
-                id: `mod_imp_${idx}`,
-                altezza: row['altezza'],
-                name: row['nome modulo'] || row['descrizione'],
-                multiplier: row['moltiplicatore'] || row['quantità'] || 0,
-                code: row['codice'] || row['BA'],
-                note: row['note'],
-                category: 'moduli'
-              }))
-            });
-          }
-
-          if (workbook.Sheets['Varie']) {
-            const dataVarie = XLSXLib.utils.sheet_to_json(workbook.Sheets['Varie']);
-            newConfigs.push({
-              id: 'varie',
-              categoryName: 'Varie',
-              options: dataVarie.map((row: any, idx: number) => ({
-                id: `var_imp_${idx}`,
-                name: row['nome componente'] || row['descrizione'],
-                multiplier: row['moltiplicatore'] || row['quantità'],
-                code: row['codice'] || row['BA'],
-                note: row['note'],
-                category: 'varie'
-              }))
-            });
-          }
-
-          if (workbook.Sheets['Curve']) {
-            const dataCurve = XLSXLib.utils.sheet_to_json(workbook.Sheets['Curve']);
-            newConfigs.push({
-              id: 'curve',
-              categoryName: 'Curve',
-              isHeightCategorized: true,
-              options: dataCurve.map((row: any, idx: number) => ({
-                id: `curv_imp_${idx}`,
-                altezza: row['altezza'],
-                name: row['nome curva'] || row['descrizione'],
-                multiplier: row['moltiplicatore'] || row['quantità'] || 0,
-                code: row['codice'] || row['BA'],
-                note: row['note'],
-                category: 'curve'
-              }))
-            });
-          }
-
-          if (newConfigs.length > 0) {
-            localStorage.setItem('tbm_configs', JSON.stringify(newConfigs));
-            setImportStatus({ type: 'success', message: `Database configurazioni aggiornato (${newConfigs.length} categorie).` });
-          } else {
-            setImportStatus({ type: 'error', message: "Nessun foglio valido trovato (Altezze, Moduli, Varie o Curve)." });
-          }
-        }
+        // Forza un ricaricamento della pagina dopo 1.5s per rendere effettive le modifiche se necessario
+        setTimeout(() => window.location.reload(), 1500);
       } catch (err) {
-        setImportStatus({ type: 'error', message: "Errore durante l'elaborazione. Verifica il formato Excel." });
-      } finally {
-        setIsProcessing(false);
+        setImportStatus({ type: 'error', message: `File ${filename} non valido. Assicurati che sia un JSON corretto.` });
       }
     };
-
-    reader.readAsBinaryString(file);
+    reader.readAsText(file);
   };
+
+  const jsonFiles = [
+    { name: 'AltezzeDB.json', label: 'Tabella Altezze' },
+    { name: 'CurveDB.json', label: 'Tabella Curve' },
+    { name: 'ModuliDB.json', label: 'Tabella Moduli' },
+    { name: 'VarieDB.json', label: 'Tabella Varie' },
+    { name: 'Utenti.json', label: 'Tabella Utenti' },
+    { name: 'Codici.json', label: 'Tabella Codici' },
+  ];
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in slide-in-from-bottom-4 duration-500 pb-20">
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Amministrazione</h1>
-          <p className="text-slate-500 font-medium">Gestione dei database sincronizzati tramite Excel.</p>
-        </div>
-        <button
-          onClick={downloadTemplate}
-          className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold text-sm hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
-        >
-          <DownloadCloud size={18} />
-          Scarica Template Excel
-        </button>
+      <header>
+        <h1 className="text-3xl font-black text-slate-900 tracking-tight">Amministrazione</h1>
+        <p className="text-slate-500 font-medium">Gestione diretta dei database di sistema in formato JSON.</p>
       </header>
 
       {importStatus.type && (
@@ -193,97 +70,66 @@ export const AdminPanel: React.FC = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <Database size={120} />
-          </div>
-          <div className="flex items-center gap-3 text-blue-600 relative z-10">
-            <div className="p-2 bg-blue-50 rounded-lg"><Database size={24} /></div>
-            <h2 className="text-xl font-black text-slate-900">Anagrafica Codici</h2>
-          </div>
-          <p className="text-sm text-slate-500 font-medium relative z-10">
-            Aggiorna l'elenco principale dei codici BA e le loro descrizioni.
-          </p>
-
-          <label className="block cursor-pointer relative z-10">
-            <div className="mt-4 border-2 border-dashed border-slate-200 rounded-2xl py-12 flex flex-col items-center hover:border-blue-400 hover:bg-blue-50/50 transition-all group/upload">
-              <FileSpreadsheet className="text-slate-300 mb-3 group-hover/upload:text-blue-400 transition-colors" size={48} />
-              <span className="text-sm font-black text-slate-600 uppercase tracking-widest">Sfoglia file Prodotti</span>
-              <input type="file" accept=".xlsx, .xls" className="hidden" onChange={e => handleFileUpload(e, 'products')} />
-            </div>
-          </label>
-        </section>
-
-        <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-            <Settings2 size={120} />
-          </div>
-          <div className="flex items-center gap-3 text-indigo-600 relative z-10">
-            <div className="p-2 bg-indigo-50 rounded-lg"><Settings2 size={24} /></div>
-            <h2 className="text-xl font-black text-slate-900">Database Configurazioni</h2>
-          </div>
-          <p className="text-sm text-slate-500 font-medium relative z-10">
-            Importa i parametri di calcolo per Altezze, Moduli, Varie e Curve.
-          </p>
-
-          <label className="block cursor-pointer relative z-10">
-            <div className="mt-4 border-2 border-dashed border-slate-200 rounded-2xl py-12 flex flex-col items-center hover:border-indigo-400 hover:bg-indigo-50/50 transition-all group/upload">
-              <Upload className="text-slate-300 mb-3 group-hover/upload:text-indigo-400 transition-colors" size={48} />
-              <span className="text-sm font-black text-slate-600 uppercase tracking-widest">Sfoglia file Config</span>
-              <input type="file" accept=".xlsx, .xls" className="hidden" onChange={e => handleFileUpload(e, 'configs')} />
-            </div>
-          </label>
-        </section>
-      </div>
-
-      <div className="bg-slate-900 text-white p-10 rounded-[2.5rem] space-y-8 shadow-2xl shadow-blue-900/20">
+      <section className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 space-y-8">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-black flex items-center gap-3">
-            <div className="p-2 bg-blue-500/20 rounded-lg"><Info className="text-blue-400" /></div>
-            Guida alla Struttura Excel
-          </h3>
-          <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-xl border border-white/10">
-            <FileQuestion size={16} className="text-slate-400" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Colonna 'Concatena': Non necessaria</span>
+          <div className="flex items-center gap-3 text-tbm-magenta">
+            <div className="p-2 bg-tbm-magenta/10 rounded-lg"><FileJson size={24} /></div>
+            <h2 className="text-xl font-black text-slate-900">Gestione Database JSON</h2>
+          </div>
+          <div className="hidden md:flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
+            <Info size={16} className="text-tbm-magenta" />
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">I file caricati hanno priorità sui default</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-            <p className="font-black text-blue-400 mb-3 uppercase text-xs tracking-widest border-b border-white/10 pb-2">Foglio: Altezze</p>
-            <ul className="space-y-2 text-[10px] font-medium text-slate-400">
-              <li className="flex justify-between"><span>altezza</span> <span className="text-white">(3500)</span></li>
-              <li className="flex justify-between"><span>tipo centina</span> <span className="text-white">Text</span></li>
-              <li className="flex justify-between"><span>n° pezzi</span> <span className="text-white">Num</span></li>
-              <li className="flex justify-between"><span>BA700197</span> <span className="text-white">Num</span></li>
-            </ul>
-          </div>
-          <div className="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-            <p className="font-black text-indigo-400 mb-3 uppercase text-xs tracking-widest border-b border-white/10 pb-2">Foglio: Moduli</p>
-            <ul className="space-y-2 text-[10px] font-medium text-slate-400">
-              <li className="flex justify-between"><span>descrizione</span> <span className="text-white">Text</span></li>
-              <li className="flex justify-between"><span>quantità</span> <span className="text-white">Num</span></li>
-              <li className="flex justify-between"><span>codice</span> <span className="text-white">BA...</span></li>
-            </ul>
-          </div>
-          <div className="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-            <p className="font-black text-emerald-400 mb-3 uppercase text-xs tracking-widest border-b border-white/10 pb-2">Foglio: Varie</p>
-            <ul className="space-y-2 text-[10px] font-medium text-slate-400">
-              <li className="flex justify-between"><span>descrizione</span> <span className="text-white">Text</span></li>
-              <li className="flex justify-between"><span>quantità</span> <span className="text-white">Num</span></li>
-              <li className="flex justify-between"><span>codice</span> <span className="text-white">BA...</span></li>
-            </ul>
-          </div>
-          <div className="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">
-            <p className="font-black text-orange-400 mb-3 uppercase text-xs tracking-widest border-b border-white/10 pb-2">Foglio: Curve</p>
-            <ul className="space-y-2 text-[10px] font-medium text-slate-400">
-              <li className="flex justify-between"><span>descrizione</span> <span className="text-white">Text</span></li>
-              <li className="flex justify-between"><span>quantità</span> <span className="text-white">Num</span></li>
-              <li className="flex justify-between"><span>codice</span> <span className="text-white">BA...</span></li>
-            </ul>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {jsonFiles.map(file => (
+            <div key={file.name} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-4 hover:shadow-md transition-all group">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-bold text-slate-900 group-hover:text-tbm-magenta transition-colors">{file.label}</h4>
+                  <p className="text-[10px] text-slate-400 font-mono">{file.name}</p>
+                </div>
+                <button
+                  onClick={() => handleJsonDownload(file.name)}
+                  className="p-2 text-tbm-magenta hover:bg-white rounded-lg transition-all shadow-sm"
+                  title="Scarica JSON corrente"
+                >
+                  <Download size={18} />
+                </button>
+              </div>
+
+              <label className="block">
+                <div className="w-full py-3 px-4 bg-white border border-slate-200 rounded-xl text-xs font-bold text-center cursor-pointer hover:border-tbm-magenta hover:text-tbm-magenta transition-all flex items-center justify-center gap-2">
+                  <Upload size={14} />
+                  Carica nuovo JSON
+                  <input
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    onChange={e => handleJsonUpload(e, file.name)}
+                  />
+                </div>
+              </label>
+            </div>
+          ))}
         </div>
+      </section>
+
+      <div className="bg-slate-900 text-white p-10 rounded-[2.5rem] space-y-6 shadow-2xl">
+        <h3 className="text-xl font-black flex items-center gap-3 italic">
+          <div className="p-2 bg-tbm-sunset/20 rounded-lg"><AlertCircle className="text-tbm-sunset" /></div>
+          Avviso Importante
+        </h3>
+        <p className="text-slate-400 text-sm leading-relaxed">
+          Il sistema Excel è stato dismesso in favore della <span className="text-white font-bold">Gestione JSON</span> per garantire la massima coerenza dei dati.
+          Per modificare il database, ti consigliamo di:
+        </p>
+        <ol className="list-decimal list-inside space-y-3 text-slate-300 text-sm font-medium">
+          <li>Scaricare il file <span className="text-tbm-sunset">.json</span> desiderato tramite il pulsante <Download size={14} className="inline mx-1" /></li>
+          <li>Modificare il file utilizzando un editor di testo (es. Notepad++ o VS Code)</li>
+          <li>Ricaricare il file modificato tramite il tasto <span className="text-white font-bold">"Carica nuovo JSON"</span></li>
+        </ol>
       </div>
     </div>
   );
