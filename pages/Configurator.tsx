@@ -111,6 +111,31 @@ export const Configurator: React.FC = () => {
         }
       });
     }
+
+    // Applichiamo la formula anche all'inizializzazione
+    const getValInit = (name: string, catId: string) => {
+      const opt = configs.find(c => c.id === catId)?.options.find(
+        o => o.name === name && o.altezza?.toString() === selectedHeight
+      );
+      return opt ? newSelections[opt.id] || 0 : 0;
+    };
+
+    const sumCentine =
+      getValInit("Centina Intera", "altezze") +
+      getValInit("Centina Spezzata", "altezze") +
+      getValInit("Centina Laterale con Porta", "altezze") +
+      getValInit("Centina Laterale Standard", "altezze");
+
+    const sumModuliAltri =
+      getValInit("Modulo LB", "moduli") +
+      getValInit("Modulo Laterale con Porta", "moduli") +
+      getValInit("Modulo Laterale Standard", "moduli");
+
+    const moduloCentraleOpt = moduliCat?.options.find(o => o.name === "Modulo Centrale" && o.altezza?.toString() === selectedHeight);
+    if (moduloCentraleOpt) {
+      newSelections[moduloCentraleOpt.id] = Math.max(0, sumCentine - sumModuliAltri - 1);
+    }
+
     setSelections(newSelections);
   }, [selectedHeight, configs]);
 
@@ -230,6 +255,33 @@ export const Configurator: React.FC = () => {
         if (targetModulo && targetModulo.multiplier > 0) {
           next[targetModulo.id] = val;
         }
+      }
+
+      // Nuova logica: Calcolo automatico Modulo Centrale
+      // Formula: ((Centina Intera + Centina Spezzata + Centina Laterale con Porta + Centina Laterale Standard) 
+      //           - (Modulo LB + Modulo Laterale con Porta + Modulo Laterale Standard)) - 1
+      const altezzeOptions = configs.find(c => c.id === 'altezze')?.options || [];
+      const moduliOptions = configs.find(c => c.id === 'moduli')?.options || [];
+
+      const getVal = (name: string, options: ConfigOption[]) => {
+        const opt = options.find(o => o.name === name && o.altezza?.toString() === selectedHeight);
+        return opt ? next[opt.id] || 0 : 0;
+      };
+
+      const sumCentine =
+        getVal("Centina Intera", altezzeOptions) +
+        getVal("Centina Spezzata", altezzeOptions) +
+        getVal("Centina Laterale con Porta", altezzeOptions) +
+        getVal("Centina Laterale Standard", altezzeOptions);
+
+      const sumModuliAltri =
+        getVal("Modulo LB", moduliOptions) +
+        getVal("Modulo Laterale con Porta", moduliOptions) +
+        getVal("Modulo Laterale Standard", moduliOptions);
+
+      const moduloCentraleOpt = moduliOptions.find(o => o.name === "Modulo Centrale" && o.altezza?.toString() === selectedHeight);
+      if (moduloCentraleOpt) {
+        next[moduloCentraleOpt.id] = Math.max(0, sumCentine - sumModuliAltri - 1);
       }
 
       return next;
@@ -397,14 +449,17 @@ export const Configurator: React.FC = () => {
                         type="number"
                         min="0"
                         placeholder="0"
-                        disabled={opt.multiplier === 0}
-                        className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${opt.multiplier === 0
-                          ? 'bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50'
+                        disabled={opt.multiplier === 0 || opt.name === "Modulo Centrale"}
+                        className={`w-20 px-3 py-2 rounded-xl border-2 outline-none text-center font-black text-lg shadow-sm transition-all ${opt.multiplier === 0 || opt.name === "Modulo Centrale"
+                          ? 'bg-slate-50 border-slate-100 text-slate-400 cursor-not-allowed opacity-70'
                           : 'border-slate-200 focus:border-blue-500 bg-white'
                           }`}
                         value={selections[opt.id] || ''}
                         onChange={e => handleInputChange(opt.id, e.target.value)}
                       />
+                      {opt.name === "Modulo Centrale" && (
+                        <p className="text-[8px] font-black text-blue-500 mt-1 uppercase text-center">Auto</p>
+                      )}
                     </div>
                   </div>
                 ))
